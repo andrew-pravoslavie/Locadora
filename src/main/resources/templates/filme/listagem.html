@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/head :: head('Listagem Filmes')}"></head>
+<body>
+    <header th:replace="~{fragmentos/header :: header(activePage='filme')}"></header>
+	<div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
+		<h2 class="text-center">Filmes</h2>
+
+		<div class="my-3">
+			<form th:action="@{/filme}">
+				<div class="row d-flex">
+					<div class="col-md-6 mt-2">
+						<div class="search">
+							<i class="fa fa-search"></i> <input id="keyword" type="search"
+								name="keyword" th:value="${keyword}" required
+								class="form-control" placeholder="Enter keyword">
+							<button type="submit" class="btn btn-secondary">Buscar</button>
+						</div>
+					</div>
+					<div class="col-md-6 mt-2">
+						<button id="btnClear" class="btn btn-info">Limpar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div th:if="${lista.size() > 0}">
+			<table class="table table-hover table-responsive-xl">
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">Título</th>
+						<th scope="col">Classificação</th>
+						<th scope="col">Lançamento</th>
+						<th scope="col">Duração</th>
+						<th scope="col">Diretor</th>
+						<th scope="col">Origem</th>
+						<th scope="col">Língua</th>
+						<th scope="col">Fora de Uso</th>
+						<th scope="col">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="filme : ${lista}">
+						<!-- <th scope="row">[[${filme.id}]]</th> -->
+						<td>[[${filme.titulo}]]</td>
+						<td>[[${filme.classificacao}]]</td>
+						<td>[[${filme.dataFormatada}]]</td>
+						<td>[[${filme.duracao}]]</td>
+						<td>[[${filme.nomeDiretor}]]</td>
+						<td>[[${filme.pais}]]</td>
+						<td>[[${filme.lingua}]]</td>
+						
+						<td><a th:if="${filme.desabilitado == true}"
+							class="fa-regular fa-square-check"
+							th:href="@{'/filme/' + ${filme.id} + '/desabilitado/false'}"
+							title="Indisponível para emprestimo"></a> <a
+							th:if="${filme.desabilitado == false}"
+							class="fa-regular fa-square icon-dark"
+							th:href="@{'/filme/' + ${filme.id} + '/desabilitado/true'}"
+							title="Disponível para emprestimo"></a>
+						</td>
+							
+							
+						<td><a th:href="@{'/filme/formulario/' + ${filme.id}}"
+							title="Editar o filme"
+							class="fa-regular fa-pen-to-square icon-dark"></a> &nbsp; <a
+							th:href="@{'/filme/delete/' + ${filme.id}}"
+							th:filmeTitle="${filme.titulo}" id="btnDelete"
+							title="Apague este filme"
+							class="fa-regular fa-trash-can icon-dark btn-delete"></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="" th:unless="${lista.size() > 0}">
+			<span>Filme não encontrado</span>
+		</div>
+	</div>
+
+	<div class="modal fade text-center" id="confirmModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Confirmação</h5>
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					<span id="confirmText"></span>
+				</div>
+
+				<div class="modal-footer">
+					<a type="button" id="yesBtn" class="btn btn-danger">Sim</a>
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Não</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="fragmentos/footer :: footer"></div>
+
+	<script type="text/javascript">
+		$(document).ready(
+				function() {
+					$(".btn-delete").on(
+							"click",
+							function(e) {
+								e.preventDefault();
+								link = $(this);
+
+								filmeTitle = link.attr("filmeTitle");
+								$("#yesBtn").attr("href", link.attr("href"));
+								$("#confirmText").html(
+										"Você deseja apagar o filme  \<strong\>"
+												+ filmeTitle
+												+ "\<\/strong\>?");
+								$("#confirmModal").modal();
+							});
+
+					$("#btnClear").on("click", function(e) {
+						e.preventDefault();
+						$("#keyword").text("");
+						window.location = "[[@{/filme}]]";
+					});
+				});
+	</script>
+
+</body>

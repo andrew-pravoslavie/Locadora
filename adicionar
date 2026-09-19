@@ -1,0 +1,63 @@
+MapStruct
+<dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct</artifactId>
+        <version>1.5.5.Final</version>
+    </dependency>
+ 
+
+    CRISTINA CORREA DE OLIVEIRAsábado 09:40
+    Service
+    //  public Cliente salvarOuAtualizar(AtualizacaoCliente dto) {
+    //        if (dto.id() != null) {
+    //            // atualizando Busca existente e atualiza
+    //            Cliente existente = clienteRepository.findById(dto.id())
+    //                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com ID: " + dto.id()));
+    //            clienteMapper.updateEntityFromDto(dto, existente);
+    //       
+    //            
+    //            return clienteRepository.save(existente);
+    //        } else {
+    //            // criando Novo cliente
+    //            Cliente novoCliente = clienteMapper.toEntityFromAtualizacao(dto);
+    //            
+    //            return clienteRepository.save(novoCliente);
+    //        }
+    //    }
+    veja mais
+    Responder
+    CRISTINA CORREA DE OLIVEIRA08:38Editada
+    Documentação API POM.xml
+    <!-- Documentação da API -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>2.5.0</version>
+            </dependency>
+    veja maisResponder
+    CRISTINA CORREA DE OLIVEIRA08:40Editada
+    Documentação no Controller
+    @Tag(name = "Filmes", description = "API para gerenciamento de filmes")
+     
+    @Controller
+    @RequestMapping("/filme")
+    @Tag(name = "Filmes", description = "API para gerenciamento de produtos da filmes")
+    public class FilmeController {
+     
+    veja maisResponder
+    CRISTINA CORREA DE OLIVEIRA08:44Editada
+    Verbos HTTP
+    Colocar em cada end-point uma documentação
+    @Operation(summary = "Editar Filme específico")
+    colocar antes do método
+    // Para editar filme com ID
+      @GetMapping ("/formulario/{id}")      
+      @Operation(summary = "Editar Filme específico")
+      public String carregaPaginaFormulario (@PathVariable("id") Long id,
+          HttpSession session,
+          RedirectAttributes redirectAttributes,
+          Model model){
+    veja mais
+    Responder
+    CRISTINA CORREA DE OLIVEIRA08:48
+    Verificar Documentação

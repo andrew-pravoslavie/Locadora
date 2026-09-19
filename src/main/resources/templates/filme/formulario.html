@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/head :: head('Manter Filme')}"></head>
+<body>
+    <header th:replace="~{fragmentos/header :: header(activePage='filme')}"></header>
+	<div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
+		<h2 class="text-center"
+			th:text="${filme.id != null} ? 'Editar Filme' : 'Adicionar Novo Filme'"></h2>
+		<div th:if="${message != null}"
+			class="alert alert-success alert-dismissible fade show text-center"
+			role="alert">
+			[[${message}]]
+			<button type="button" class="close btn-sm" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+
+		<form th:action="@{/filme/salvar}" 
+			th:object="${filme}" method="post" 
+			enctype="application/x-www-form-urlencoded">
+            <input type="hidden" th:field="*{id}"/>
+
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="titulo">Título</label> <input type="text"
+						class="form-control" id="titulo" th:field="*{titulo}" required>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="classificacao">Classificação</label> <input type="text"
+						class="form-control" id="classificacao"
+						th:field="*{classificacao}">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="dataLancamento">Data de Lançamento</label> <input
+						type="date" id="dataLancamento"
+						th:field="*{dataLancamento}"
+						th:value="${filme.dataLancamento != null} ? 
+                   ${#temporals.format(filme.dataLancamento, 'yyyy-MM-dd')} : ''" class="form-control" >
+						
+				</div>
+				<div class="form-group col-md-6">
+					<!--  <div class="<input type="hidden" th:field="*{id}"/>-->
+					<label for="duracao">Duração (minutos)</label> <input type="text"
+						class="form-control" id="duracao" th:field="*{duracao}">
+				</div>	
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="nomeDiretor">Diretor</label> <input type="text"
+						class="form-control" id="nomeDiretor" th:field="*{nomeDiretor}">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="lingua">Genero</label> <input type="text"
+						class="form-control" id="genero" th:field="*{genero}">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="pais">País de Origem</label> <input type="text"
+						class="form-control" id="pais" th:field="*{pais}">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="lingua">Língua</label> <input type="text"
+						class="form-control" id="lingua" th:field="*{lingua}">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-12">
+					<label for="pais">Resumo</label> <input type="text"
+						class="form-control" id="resumo" th:field="*{resumo}">
+				</div>
+
+			</div>
+
+			<div class="form-group form-check">
+				<input type="checkbox" class="form-check-input" id="desabilitado"
+					th:field="*{desabilitado}"> <label class="form-check-label"
+					for="desabilitado">Fora de uso</label>
+			</div>
+
+			<div class="text-center">
+				<button type="submit" class="btn btn-primary mr-2">
+					<span th:text="${filme.id} != null ? 'Atualizar' : 'Salvar'"></span>
+				</button>
+				<a
+					th:href="@{/filme} + (${keyword != null} ? '?keyword=' + ${keyword} : '')"
+					class="btn btn-secondary">Cancelar</a>
+			</div>
+		</form>
+	</div>
+	<div th:replace="fragmentos/footer :: footer"></div>
+	 <!-- Seus scripts no final do body -->
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+<script>
+    document.getElementById('posterInput').addEventListener('change', function(event) {
+        const input = event.target;
+        const preview = document.getElementById('imagePreview');
+        
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/head :: head('Listagem Atores')}"></head>
+<body>
+<header th:replace="~{fragmentos/header :: header(activePage='ator')}"></header>
+<div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
+		<h2 class="text-center">Atores</h2>
+    <a href="/ator/formulario">Novo</a>
+    <table class="table table-hover table-responsive-xl">
+       <thead class="thead-light">
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">País</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ator : ${lista}">
+                <td>[[${ator.nome}]]</td>
+                 <td>[[${ator.pais}]]</td>
+                 
+                <td>
+					<a th:href="@{'/ator/formulario/' + ${ator.id}}"
+						title="Editar o ator"
+						class="fa-regular fa-pen-to-square icon-dark"></a> &nbsp; <a
+						th:href="@{'/ator/delete/' + ${ator.id}}"
+						th:filmeTitle="${ator.nome}" id="btnDelete"
+						title="Apague este ator"
+						class="fa-regular fa-trash-can icon-dark btn-delete">
+					</a>
+				</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

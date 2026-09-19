@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/head :: head('Login')}"></head>
+<body>
+	<div
+		th:replace="~{fragmentos/header :: header(activePage='')}"></div>
+	<div class="Login-Form">
+		<div class="container">
+			<div class="main-div">
+				<div class="texto-header">
+					<h2>Login</h2>
+					<p>Insira suas credenciais para entrar na Locadora 2001.</p>
+				</div>
+
+				<form method="post" action="login" th:object="${usuario}">
+
+					<div class="alert alert-danger" role="alert" th:if="${msg}">
+						<strong th:text="${msg}"></strong>
+					</div>
+					<div class="form-row">
+						<div class="form-group">
+							<input type="text" th:field="*{user}" class="form-control"
+								placeholder="username">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group">
+							<input type="password" th:field="*{senha}" class="form-control"
+								placeholder="senha">
+						</div>
+					</div>
+					<div class="cadastro">
+						<a th:href="@{cadastro}">Clique aqui para se cadastrar</a>
+					</div>
+					<button type="submit" class="btn btn-primary">Login</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

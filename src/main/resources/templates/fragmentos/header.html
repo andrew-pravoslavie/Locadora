@@ -1,0 +1,77 @@
+<!-- templates/fragmentos/header.html -->
+<header th:fragment="header(activePage)">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+			<a class="navbar-brand" > <i class="fas fa-film me-2"></i>RentMovie 2050 </a>
+
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+
+				<ul class="navbar-nav me-auto">
+					<!-- Item normal -->
+					<li class="nav-item"><a class="nav-link"
+						th:classappend="${activePage == 'dashboard'} ? 'active' : ''"
+						th:href="@{/dashboard}"> 
+						<i class="fas fa-home me-1"></i>
+							Início
+					</a></li>
+
+					<!-- Dropdown de Filmes -->
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="filmesDropdown"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false"
+						th:classappend="${activePage == 'filme'} ? 'active' : ''"
+						style="cursor: pointer;"> <i class="fas fa-film me-1"></i>
+							Filmes
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="filmesDropdown">
+							<li><a class="dropdown-item"
+								th:classappend="${activePage == 'filme'} ? 'active' : ''"
+								th:href="@{/filme}"> <i class="fas fa-list me-1"></i> Listagem Filmes</a>
+							</li>
+							<li><a class="dropdown-item"
+								th:classappend="${activePage == 'filme'} ? 'active' : ''"
+								th:href="@{/filme/formulario}"> 
+								<i class="fas fa-star me-1"></i> 
+								Cadastrar Filme
+								</a>
+							</li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="dropdown-item"
+								th:classappend="${activePage == 'filmeomdb'} ? 'active' : ''"
+								th:href="@{/filmeomdb/buscaromdb}"> 
+								<i class="fa fa-imdb" style="font-size:24px">
+								</i> Procurar OMDB
+								</a>
+							</li>
+						</ul>
+					</li>
+					<!-- Dropdown de Atores -->
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="atoresDropdown"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false"
+						th:classappend="${activePage == 'ator'} ? 'active' : ''"
+						style="cursor: pointer;"> <i class="fas fa-film me-1"></i>
+							Atores
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="atoresDropdown">
+							<li><a class="dropdown-item"
+								th:classappend="${activePage == 'ator'} ? 'active' : ''"
+								th:href="@{/ator}"> <i class="fas fa-list me-1"></i> Listagem Atores
+								</a>
+							</li>
+							<li><a class="dropdown-item"
+								th:classappend="${activePage == 'ator'} ? 'active' : ''"
+								th:href="@{/ator/formulario}"> <i class="fas fa-star me-1"></i> Cadastrar Ator</a>
+							</li>
+							
+						</ul>
+					</li>
+				</ul>
+            </div>
+        </div>
+    </nav>
+</header>
